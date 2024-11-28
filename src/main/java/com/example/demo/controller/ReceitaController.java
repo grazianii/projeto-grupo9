@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-
 import com.example.demo.entity.Receita;
 import com.example.demo.repository.ReceitaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class ReceitaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Receita> getCategoriaById(@PathVariable Long id) {
+    public ResponseEntity<Receita> getReceitaById(@PathVariable Long id) {
         return receitaRepository.findById(id)
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.notFound().build());
@@ -34,14 +33,18 @@ public class ReceitaController {
     }
 
     @PutMapping("/{id}")
-    public Receita updateReceita(@PathVariable Long id, @RequestBody Receita receitaDetails) {
-        Receita receita = receitaRepository.findById(id).orElseThrow();
-        receita.setNome(receitaDetails.getNome());
-        receita.setDescricao(receitaDetails.getDescricao());
-        receita.setIngredientes(receitaDetails.getIngredientes());
-        receita.setModoPreparo(receitaDetails.getModoPreparo());
-        receita.setCategoria(receitaDetails.getCategoria());
-        return receitaRepository.save(receita);
+    public ResponseEntity<Receita> updateReceita(@PathVariable Long id, @RequestBody Receita receitaDetails) {
+        return receitaRepository.findById(id)
+            .map(receita -> {
+                receita.setNome(receitaDetails.getNome());
+                receita.setDescricao(receitaDetails.getDescricao());
+                receita.setIngredientes(receitaDetails.getIngredientes());
+                receita.setModoPreparo(receitaDetails.getModoPreparo());
+                receita.setCategoria(receitaDetails.getCategoria());
+                Receita updatedReceita = receitaRepository.save(receita);
+                return ResponseEntity.ok(updatedReceita);
+            })
+            .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
@@ -49,3 +52,4 @@ public class ReceitaController {
         receitaRepository.deleteById(id);
     }
 }
+
