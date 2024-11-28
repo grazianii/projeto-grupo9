@@ -5,10 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 import lombok.*;
 
-@Data
 @Entity
 public class Categoria {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

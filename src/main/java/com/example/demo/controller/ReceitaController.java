@@ -1,12 +1,13 @@
 package com.example.demo.controller;
 
+
 import com.example.demo.entity.Receita;
 import com.example.demo.repository.ReceitaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/receitas")
@@ -21,8 +22,10 @@ public class ReceitaController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Receita> getReceitaById(@PathVariable Long id) {
-        return receitaRepository.findById(id);
+    public ResponseEntity<Receita> getCategoriaById(@PathVariable Long id) {
+        return receitaRepository.findById(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
