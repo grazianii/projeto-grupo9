@@ -25,4 +25,12 @@ public class Receita {
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
+
+    public Receita (String nome, String descricao, String ingredientes, String modoPreparo, Categoria categoria){
+        this.nome = nome;
+        this.descricao = descricao;
+        this.ingredientes = ingredientes;
+        this.modoPreparo = modoPreparo;
+        this.categoria = categoria;
+    }
 }
