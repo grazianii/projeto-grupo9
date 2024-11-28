@@ -20,10 +20,14 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        Categoria sobremesa = categoriaRepository.save(new Categoria("Sobremesa"));
-        Categoria pratoPrincipal = categoriaRepository.save(new Categoria("Prato Principal"));
-        Categoria vegetariano = categoriaRepository.save(new Categoria("Vegetariano"));
-    
+        Categoria sobremesa = new Categoria("Sobremesa");
+        Categoria pratoPrincipal = new Categoria("Prato Principal");
+        Categoria vegetariano = new Categoria("Vegetariano");
+
+        categoriaRepository.save(sobremesa);
+        categoriaRepository.save(pratoPrincipal);
+        categoriaRepository.save(vegetariano);
+
         Receita boloChocolate = new Receita(
             "Bolo de Chocolate", 
             "Um delicioso bolo de chocolate com cobertura cremosa.",
@@ -31,7 +35,7 @@ public class DataLoader implements CommandLineRunner {
             "Misture os ingredientes secos, adicione os líquidos e asse por 40 minutos a 180°C.",
             sobremesa
         );
-    
+
         Receita feijoada = new Receita(
             "Feijoada",
             "Um prato tradicional brasileiro, rico e saboroso.",
@@ -39,7 +43,7 @@ public class DataLoader implements CommandLineRunner {
             "Cozinhe o feijão com as carnes e temperos até ficar macio.",
             pratoPrincipal
         );
-    
+
         receitaRepository.save(boloChocolate);
         receitaRepository.save(feijoada);
     }
